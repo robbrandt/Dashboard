@@ -4,6 +4,8 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
 {
     public function install()
     {
+        $this->setVar('widgetsperrow', 5);
+
         return true;
     }
 

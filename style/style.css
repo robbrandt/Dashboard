@@ -1,0 +1,9 @@
+div.z-dashboardlink {
+    text-align: center;
+    float: left;
+    height: 9em;
+}
+
+div.z-dashboardlink img {
+    border: none;
+}
