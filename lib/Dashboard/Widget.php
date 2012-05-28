@@ -5,6 +5,16 @@ class Dashboard_Widget implements \ArrayAccess
     /**
      * @var string
      */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $module;
+
+    /**
+     * @var string
+     */
     private $url;
 
     /**
@@ -15,25 +25,116 @@ class Dashboard_Widget implements \ArrayAccess
     /**
      * @var string
      */
-    private $module;
+    private $content;
 
     /**
      * @var string
      */
-    private $icon;
+    private $preview;
 
-    public function setIcon($icon)
+    /**
+     * Sets Content
+     *
+     * @param string $content
+     *
+     * @return Dashboard_Widget
+     */
+    public function setContent($content)
     {
-        $this->icon = $icon;
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getIcon()
+    /**
+     * Gets Content
+     *
+     * @return string
+     */
+    public function getContent()
     {
-        return $this->icon;
+        return $this->content;
     }
 
+    /**
+     * Sets Module
+     *
+     * @param string $module
+     *
+     * @return Dashboard_Widget
+     */
+    public function setModule($module)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Gets Module
+     *
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * Sets Name
+     *
+     * @param string $name
+     *
+     * @return Dashboard_Widget
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets Name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets Preview
+     *
+     * @param string $preview
+     *
+     * @return Dashboard_Widget
+     */
+    public function setPreview($preview)
+    {
+        $this->preview = $preview;
+
+        return $this;
+    }
+
+    /**
+     * Gets Preview
+     *
+     * @return string
+     */
+    public function getPreview()
+    {
+        return $this->preview;
+    }
+
+    /**
+     * Sets Title
+     *
+     * @param string $title
+     *
+     * @return Dashboard_Widget
+     */
     public function setTitle($title)
     {
         $this->title = $title;
@@ -41,6 +142,11 @@ class Dashboard_Widget implements \ArrayAccess
         return $this;
     }
 
+    /**
+     * Gets Title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
@@ -70,30 +176,6 @@ class Dashboard_Widget implements \ArrayAccess
         return $this->url;
     }
 
-    /**
-     * Sets Module
-     *
-     * @param string $module
-     *
-     * @return Dashboard_Widget
-     */
-    public function setModule($module)
-    {
-        $this->module = $module;
-
-        return $this;
-    }
-
-    /**
-     * Gets Module
-     *
-     * @return string
-     */
-    public function getModule()
-    {
-        return $this->module;
-    }
-
     // ArrayAccess interface implementation
 
     /**
@@ -102,7 +184,6 @@ class Dashboard_Widget implements \ArrayAccess
      * @param mixed $key The offset to retrieve.
      *
      * @return mixed The value at the specified offset.
-     *
      * @throws InvalidArgumentException Thrown if the key does not exist in the collection.
      */
     public function offsetGet($key)
@@ -147,5 +228,10 @@ class Dashboard_Widget implements \ArrayAccess
     public function offsetUnset($key)
     {
         $this->$key = null;
+    }
+
+    public function __toString()
+    {
+        return $this->content;
     }
 }

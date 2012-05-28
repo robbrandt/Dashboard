@@ -5,6 +5,7 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
     public function install()
     {
         $this->setVar('widgetsperrow', 5);
+        EventUtil::registerPersistentModuleHandler($this->name, 'installer.module.uninstalled', array('Dashboard_UninstallListener', 'uninstall'));
 
         return true;
     }
@@ -16,6 +17,8 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
 
     public function uninstall()
     {
+        EventUtil::unregisterPersistentModuleHandlers($this->name);
+
         return true;
     }
 
