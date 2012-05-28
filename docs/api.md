@@ -13,8 +13,8 @@ itself as `dashboard` capable. This can be done in the module's `Version.php`:
         return $version;
     }
 
-The module should then provide a Dashboard API which returns an array of
-widgets like so:
+The module should then provide a Dashboard API which returns a Dashboard_WidgetCollection
+instance like so:
 
     <?php
 
@@ -28,7 +28,7 @@ widgets like so:
          */
         public function getWidgets($args)
         {
-            $widgets = array();
+            $widgets = new Dashboard_WidgetCollection();
 
             $widget = new Dashboard_Widget();
             $widget->setModule('dashboard');
@@ -36,7 +36,7 @@ widgets like so:
             $widget->setUrl(ModUtil::url('Dashboard', 'user', 'view'));
             $widget->setIcon('dashboard.png');
 
-            $widgets[] = $widget;
+            $widgets->add($widget);
 
             $widget = new Dashboard_Widget();
             $widget->setModule('dashboard');
@@ -44,7 +44,7 @@ widgets like so:
             $widget->setUrl(ModUtil::url('Dashboard', 'user', 'view'));
             $widget->setIcon('dashboard.png');
 
-            $widgets[] = $widget;
+            $widgets->add($widget);
 
             return $widgets;
         }

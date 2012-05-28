@@ -10,7 +10,7 @@ class Dashboard_Api_Dashboard extends Zikula_AbstractApi
      */
     public function getWidgets($args)
     {
-        $widgets = array();
+        $widgets = new Dashboard_WidgetCollection();
 
         $widget = new Dashboard_Widget();
         $widget->setModule('dashboard');
@@ -18,7 +18,7 @@ class Dashboard_Api_Dashboard extends Zikula_AbstractApi
         $widget->setUrl(ModUtil::url('Dashboard', 'user', 'view'));
         $widget->setIcon('dashboard.png');
 
-        $widgets[] = $widget;
+        $widgets->add($widget);
 
         $widget = new Dashboard_Widget();
         $widget->setModule('dashboard');
@@ -26,7 +26,7 @@ class Dashboard_Api_Dashboard extends Zikula_AbstractApi
         $widget->setUrl(ModUtil::url('Dashboard', 'user', 'view'));
         $widget->setIcon('dashboard.png');
 
-        $widgets[] = $widget;
+        $widgets->add($widget);
 
         return $widgets;
     }

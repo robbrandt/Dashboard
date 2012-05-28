@@ -9,15 +9,15 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         }
 
         $dashboardCapable = ModUtil::getModulesCapableOf('dashboard');
-        $dashboard = new Dashboard_WidgetCollection();
+        $dashboard = array();
         foreach ($dashboardCapable as $module) {
             $widgets = ModUtil::apiFunc($module['name'], 'dashboard', 'getWidgets');
-            foreach ($widgets as $widget) {
-                $dashboard->add($widget);
+            foreach ($widgets->getCollection() as $widget) {
+                $dashboard[] =$widget;
             }
         }
 
-        $this->view->assign('widgets', $dashboard->getCollection());
+        $this->view->assign('widgets', $dashboard);
 
         return $this->view->fetch('User/view.html.tpl');
     }
