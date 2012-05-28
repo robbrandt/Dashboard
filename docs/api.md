@@ -1,7 +1,7 @@
 Example
 =======
 
-For a module to provide widgets for the dashboard API the module must regsiter
+For a module to provide widgets for the dashboard API the module must register
 itself as `dashboard` capable. This can be done in the module's `Version.php`:
 
     public function getMetaData()
@@ -18,7 +18,7 @@ instance like so:
 
     <?php
 
-    class Dashboard_Api_Dashboard extends Zikula_AbstractApi
+    class Example_Api_Dashboard extends Zikula_AbstractApi
     {
         /**
          * Example Api
