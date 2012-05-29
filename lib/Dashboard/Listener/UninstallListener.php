@@ -1,6 +1,6 @@
 <?php
 
-class UninstallListener
+class Dashboard_Listener_UninstallListener
 {
     /**
      * On an module remove hook call this listener
@@ -11,7 +11,7 @@ class UninstallListener
      *
      * @return void
      */
-    public function uninstall(Zikula_Event $event)
+    public static function uninstall(Zikula_Event $event)
     {
         $moduleName = $event['name'];
     }
