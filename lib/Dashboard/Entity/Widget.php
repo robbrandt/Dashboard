@@ -40,7 +40,6 @@ class Dashboard_Entity_Widget
      */
     private $class;
 
-
     /**
      * Get id
      *

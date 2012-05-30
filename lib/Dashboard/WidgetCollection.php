@@ -12,8 +12,8 @@ class Dashboard_WidgetCollection extends Zikula_Collection_Container
 
     public function add($value)
     {
-        if (!$value instanceof Dashboard_Widget) {
-            throw new \InvalidArgumentException('Must be an instance of Dashboard_Widget');
+        if (!$value instanceof Dashboard_AbstractWidget) {
+            throw new \InvalidArgumentException('Must be an instance of Dashboard_AbstractWidget');
         }
 
         return parent::add($value);
@@ -21,8 +21,8 @@ class Dashboard_WidgetCollection extends Zikula_Collection_Container
 
     public function set($key, $value)
     {
-        if (!$value instanceof Dashboard_Widget) {
-            throw new \InvalidArgumentException('Must be an instance of Dashboard_Widget');
+        if (!$value instanceof Dashboard_AbstractWidget) {
+            throw new \InvalidArgumentException('Must be an instance of Dashboard_AbstractWidget');
         }
 
         return parent::set($key, $value);

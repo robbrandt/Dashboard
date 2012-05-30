@@ -31,7 +31,7 @@ class Dashboard_Entity_UserWidget
      *
      * @ORM\Column(name="position", type="integer")
      */
-    private $position;
+    private $position = 0;
 
     /**
      * @var integer $widget_id
@@ -41,12 +41,11 @@ class Dashboard_Entity_UserWidget
     private $widget_id;
 
     /**
-     * @var string $module
+     * @var string $class
      *
-     * @ORM\Column(name="module", type="string", length=50)
+     * @ORM\Column(name="class", type="string", length=120)
      */
-    private $module;
-
+    private $class;
 
     /**
      * Get id
@@ -131,26 +130,27 @@ class Dashboard_Entity_UserWidget
     }
 
     /**
-     * Set module
+     * Set class
      *
-     * @param string $module
+     * @param string $class
      *
      * @return Dashboard_Entity_UserWidget
      */
-    public function setModule($module)
+    public function setClass($class)
     {
-        $this->module = $module;
+        $this->class = $class;
 
         return $this;
     }
 
     /**
-     * Get module
      *
-     * @return string 
+     * Get class
+     *
+     * @return string
      */
-    public function getModule()
+    public function getClass()
     {
-        return $this->module;
+        return $this->class;
     }
 }

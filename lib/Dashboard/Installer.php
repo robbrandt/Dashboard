@@ -4,11 +4,11 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
 {
     public function install()
     {
-//        try {
+        try {
             DoctrineHelper::createSchema($this->entityManager, array('Dashboard_Entity_Widget', 'Dashboard_Entity_UserWidget'));
-//        } catch (Exception $e) {
-//            return false;
-//        }
+        } catch (Exception $e) {
+            return false;
+        }
 
         $this->setVar('widgetsperrow', 5);
         EventUtil::registerPersistentModuleHandler($this->name, 'installer.module.uninstalled', array('Dashboard_Listener_UninstallListener', 'uninstall'));
