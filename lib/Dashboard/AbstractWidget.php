@@ -1,6 +1,6 @@
 <?php
 
-abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface
+abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface, ArrayAccess
 {
     /**
      * @var string
@@ -18,6 +18,11 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface
     protected $userWidgetId;
 
     /**
+     * @var integer
+     */
+    protected $id;
+
+    /**
      * Gets Content
      *
      * @return string
@@ -33,7 +38,7 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface
     {
         $class = get_class($this);
 
-        return strtolower(substr($class, 0, strpos($class, '_')-1));
+        return strtolower(substr($class, 0, strpos($class, '_')));
     }
 
     public static function getClass()
@@ -198,5 +203,67 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface
     public function __toString()
     {
         return $this->getContent();
+    }
+
+    /**
+     * Sets Id
+     *
+     * @param int $id
+     *
+     * @return Dashboard_AbstractWidget
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets Id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function offsetGet($key)
+    {
+        $method = 'get'.ucwords($key);
+        if (method_exists($this, $method)) {
+            return $this->$method($key);
+        }
+
+        if (property_exists($this, $key)) {
+            return $this->$key;
+        }
+
+        throw new InvalidArgumentException(sprintf('method %s nor property %s not found', $method, $key));
+    }
+
+    public function offsetSet($key, $value)
+    {
+        $method = 'set'.ucwords($key);
+        if (method_exists($this, $method)) {
+            return $this->$method($key, $value);
+        }
+
+        if (property_exists($this, $key)) {
+            return $this->$key = $value;
+        }
+
+        throw new InvalidArgumentException(sprintf('method %s nor property %s not found', $method, $key));
+    }
+
+    public function offsetUnset($key)
+    {
+        return $this->offsetSet($key, null);
+    }
+
+    public function offsetExists($key)
+    {
+        return (bool) $this->offsetGet($key);
     }
 }

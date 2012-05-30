@@ -24,4 +24,9 @@ class Dashboard_Widget_Example extends Dashboard_AbstractWidget
     {
         return ModUtil::url('Dashboard', 'widget', 'example');
     }
+
+    public function getIcon()
+    {
+        return 'dashboard.png';
+    }
 }

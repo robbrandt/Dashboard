@@ -14,6 +14,9 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
         EventUtil::registerPersistentModuleHandler($this->name, 'installer.module.uninstalled', array('Dashboard_Listener_UninstallListener', 'uninstall'));
         EventUtil::registerPersistentModuleHandler($this->name, 'user.account.delete', array('Dashboard_Listener_RemoveUserListener', 'remove'));
 
+        Dashboard_Util::registerWidget(new Dashboard_Widget_Example());
+        Dashboard_Util::registerWidget(new Dashboard_Widget_Example2());
+
         return true;
     }
 

@@ -25,7 +25,24 @@ class Dashboard_Controller_User extends Zikula_AbstractController
             $dashboard[] = $widget;
         }
 
-        $this->view->assign('widgets', $dashboard);
+        $this->view->assign('userWidgets', $dashboard);
+
+        $dbWidgets = $this->entityManager->getRepository('Dashboard_Entity_Widget')
+            ->findAll();
+
+        $widgets = array();
+        /* @var Dashboard_Entity_Widget $dbWidget */
+        foreach ($dbWidgets as $dbWidget) {
+            $class = $dbWidget->getClass();
+
+            /* @var Dashboard_AbstractWidget $widget */
+            $widget = new $class();
+            $widget->setId($dbWidget->getId());
+            $widgets[] = $widget;
+
+        }
+
+        $this->view->assign('widgets', $widgets);
 
         return $this->view->fetch('User/view.html.tpl');
     }
@@ -37,17 +54,21 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         }
 
         $position = $this->request->request->get('widget_position', 0);
-        $widgetClass = $this->request->request->get('widget_class', null);
-        if (null === $widgetClass) {
-            throw new Exception($this->__('widget_class not specified'));
+        $widgetId = $this->request->query->get('id', null);
+        if (null === $widgetId) {
+            throw new Exception($this->__(sprintf('%s not found', $widgetId)));
         }
 
-        if (class_exists($widgetClass)) {
-            throw new Exception($this->__(sprintf('%s not found', $widgetClass)));
+        $widget = $this->entityManager->getRepository('Dashboard_Entity_Widget')
+            ->findOneBy(array('id' => $widgetId));
+
+        if (!$widget) {
+            throw new Exception(sprintf('Widget id %s not found', $widgetId));
         }
 
+        $class = $widget->getClass();
         /* @var Dashboard_AbstractWidget $widget */
-        $widget = new $widgetClass();
+        $widget = new $class();
         if (false === ModUtil::available($widget->getModule())) {
             throw new Exception($this->__(sprintf('%s not available (disabled or not installed', $widget->getModule())));
         }
@@ -64,11 +85,13 @@ class Dashboard_Controller_User extends Zikula_AbstractController
            return LogUtil::registerPermissionError();
         }
 
-        $id = $this->request->request->get('widget_id', null);
+        $id = $this->request->query->get('id', null);
         if (null === $id) {
-            throw new Exception($this->__('widget_id not specified'));
+            throw new Exception($this->__('id not specified'));
         }
 
         Dashboard_Util::removeUserWidget($id);
+
+        return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
     }
 }
