@@ -2,24 +2,27 @@ Example
 =======
 
 For a module to provide widgets for the dashboard API the module must register
-itself as `dashboard` capable. This can be done in the module's `Version.php`:
+widgets using the Admin API calls
 
-    public function getMetaData()
-    {
-        $version = array();
-        // ...
-        $version['capabilities'] = array('dashboard' => array('version' => '1.0'));
+    $widget = new Example_Widget_DisplayUsers();
+    ModUtil::apiFunc('Dashboard', 'admin', 'registerWidget', array('widget' => $widget));
 
-        return $version;
-    }
+Similarly they can be removed by
 
-Note, after adding a new capability, you need to view the Extensions module list view
-once to generate the capabilities meta-data.
+    ModUtil::apiFunc('Dashboard', 'admin', 'registerWidget',
+        array('name' => $name,
+              'module' => $module,
+        )
+    );
 
-The module should then provide a Dashboard API which returns a `Dashboard_WidgetCollection`.
+Because the dashboard module may not be installed when widget capable modules
+are installed, it is important to implement an event listener for
 
-The `Dashboard_WidgetCollection` should contain `Dashboard_Widget` instances which explain
-the behaviour of the widget.
+`installer.module.installed` which receives `$modinfo` as args
+after a module is successfully installed. This will allow you to
+retroactively register widgets when the Dashboard module is installed.
+
+Widgets must implement the `Dashboard_AbstractWidget` class
 
 Each method is explained:
 
@@ -30,47 +33,37 @@ Each method is explained:
   - `setUrl()` sets the URL the widget should link to, if any.
   - `setTitle()` sets the display title.
   - `setName()` sets the internal name of the widget.
+  - `setIcon()` sets the name of any display icon (for add view).
 
-Here is an example of an API used to collect widgets. Note it must be called
-`<modulename>_Api_Dashboard` and have the method `getWidgets()` and return
-a collection as detailed below:
+Widgets will appear in the Dashboard (available from `My Account`).
 
-    <?php
-
-    class Example_Api_Dashboard extends Zikula_AbstractApi
+    class Example_Widget_Foo extends Dashboard_AbstractWidget
     {
-        /**
-        * Example Api
-        *
-        * @param array $args
-        *
-        * @return array
-        */
-        public function getWidgets($args)
+        protected $domain = 'module_example';
+
+        public function getName()
         {
-            $widgets = new Dashboard_WidgetCollection();
-
-            $widget = new Dashboard_Widget(); // no link
-            $widget->setName('one');
-            $widget->setModule('dashboard');
-            $widget->setTitle($this->__('Dashboard'));
-            $widget->setContent('Content1');
-            $widget->setPreview('Preview1');
-
-            $widgets->add($widget);
-
-            $widget = new Dashboard_Widget(); // with link
-            $widget->setName('two');
-            $widget->setModule('dashboard');
-            $widget->setTitle($this->__('Dashboard'));
-            $widget->setUrl(ModUtil::url('Dashboard', 'user', 'view'));
-            $widget->setPreview('Preview Content Goes Here');
-            $widget->setContent('Main Content goes here.');
-
-            $widgets->add($widget);
-
-            return $widgets;
+            return 'example_foo';
         }
-}
 
-After this, widgets will appear in the Dashboard (available from `My Account`).
+        public function getTitle()
+        {
+            return $this->__('Example widget foo');
+        }
+
+        public function getContent()
+        {
+            return 'Example content foo';
+        }
+
+        public function getUrl()
+        {
+            return ModUtil::url('Dashboard', 'widget', 'example');
+        }
+
+        public function getIcon()
+        {
+            return 'foo.png'; // stored in module's image/ folder
+        }
+    }
+

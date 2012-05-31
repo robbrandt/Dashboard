@@ -14,6 +14,8 @@ class Dashboard_Listener_UninstallListener
     public static function uninstall(Zikula_Event $event)
     {
         $moduleName = $event['name'];
+
+        Dashboard_Util::unregisterWidgets($moduleName);
     }
 
 }

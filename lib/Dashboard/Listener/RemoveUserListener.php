@@ -12,6 +12,8 @@ class Dashboard_Listener_RemoveUserListener
     public static function remove(Zikula_Event $event)
     {
         $user = $event->getSubject();
+
+        Dashboard_Util::removeUserWidgets($user['uid']);
     }
 
 }
