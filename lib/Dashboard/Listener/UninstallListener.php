@@ -11,7 +11,7 @@ class Dashboard_Listener_UninstallListener
      *
      * @return void
      */
-    public static function uninstall(Zikula_Event $event)
+    public static function onUninstallModule(Zikula_Event $event)
     {
         $moduleName = $event['name'];
 

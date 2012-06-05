@@ -81,6 +81,7 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
      */
     public function getIcon()
     {
+        return 'dashboard.png';
     }
 
     /**

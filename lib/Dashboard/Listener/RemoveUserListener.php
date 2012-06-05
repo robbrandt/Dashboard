@@ -9,7 +9,7 @@ class Dashboard_Listener_RemoveUserListener
      *
      * @param Zikula_Event $event Event.
      */
-    public static function remove(Zikula_Event $event)
+    public static function onRemoveUser(Zikula_Event $event)
     {
         $user = $event->getSubject();
 

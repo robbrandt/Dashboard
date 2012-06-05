@@ -11,9 +11,17 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
         }
 
         $this->setVar('widgetsperrow', 5);
-        EventUtil::registerPersistentModuleHandler($this->name, 'installer.module.uninstalled', array('Dashboard_Listener_UninstallListener', 'uninstall'));
-        EventUtil::registerPersistentModuleHandler($this->name, 'user.account.delete', array('Dashboard_Listener_RemoveUserListener', 'remove'));
+        $this->setVar('widgetsnewuser', 0);
+        EventUtil::registerPersistentModuleHandler($this->name, 'installer.module.uninstalled',
+                                                   array('Dashboard_Listener_UninstallListener', 'onUninstallModule'));
 
+        EventUtil::registerPersistentModuleHandler($this->name, 'user.account.create',
+                                                   array('Dashboard_Listener_CreateUserListener', 'onCreateUser'));
+
+        EventUtil::registerPersistentModuleHandler($this->name, 'user.account.delete',
+                                                   array('Dashboard_Listener_RemoveUserListener', 'onRemoveUser'));
+
+        // this is just example code for debugging - todo - remove at module release (drak)
         Dashboard_Util::registerWidget(new Dashboard_Widget_Example());
         Dashboard_Util::registerWidget(new Dashboard_Widget_Example2());
 

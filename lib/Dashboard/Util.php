@@ -73,6 +73,9 @@ class Dashboard_Util
                                                                                'module' => $widget->getModule(),
                                                                            ));
 
+        if (!SecurityUtil::checkPermission('Dashboard::', "{$widget->getId()}:{$widget->getModule()}:$uid", ACCESS_EDIT)) {
+            return; // error
+        }
         $userWidget = new Dashboard_Entity_UserWidget();
         $userWidget->setUid($uid);
         $userWidget->setWidgetId($widget->getId());

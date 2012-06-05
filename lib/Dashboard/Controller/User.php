@@ -10,37 +10,12 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
         $uid = $this->request->getSession()->get('uid');
 
-        $userWidgets = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')
-            ->findBy(array('uid' => $uid));
-
-        $dashboard = array();
-        /* @var Dashboard_Entity_UserWidget $userWidget */
-        foreach ($userWidgets as $userWidget) {
-            $class = $userWidget->getClass();
-
-            /* @var Dashboard_AbstractWidget $widget */
-            $widget = new $class();
-            $widget->setPosition($userWidget->getPosition());
-            $widget->setUserWidgetId($userWidget->getId());
-            $dashboard[] = $widget;
-        }
+        $helper = new Dashboard_Helper_WidgetHelper($this->entityManager);
+        $dashboard = $helper->getUserWidgets($uid);
 
         $this->view->assign('userWidgets', $dashboard);
 
-        $dbWidgets = $this->entityManager->getRepository('Dashboard_Entity_Widget')
-            ->findAll();
-
-        $widgets = array();
-        /* @var Dashboard_Entity_Widget $dbWidget */
-        foreach ($dbWidgets as $dbWidget) {
-            $class = $dbWidget->getClass();
-
-            /* @var Dashboard_AbstractWidget $widget */
-            $widget = new $class();
-            $widget->setId($dbWidget->getId());
-            $widgets[] = $widget;
-
-        }
+        $widgets = $helper->getRegisteredWidgets($uid);
 
         $this->view->assign('widgets', $widgets);
 
@@ -49,8 +24,10 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
     public function addWidget()
     {
+        $this->checkCsrfToken($this->request->query->get('csrftoken', null));
+
         if (!SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ)) {
-           return LogUtil::registerPermissionError();
+            return LogUtil::registerPermissionError();
         }
 
         $position = $this->request->request->get('widget_position', 0);
@@ -81,8 +58,10 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
     public function removeWidget()
     {
+        $this->checkCsrfToken($this->request->query->get('csrftoken', null));
+
         if (!SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ)) {
-           return LogUtil::registerPermissionError();
+            return LogUtil::registerPermissionError();
         }
 
         $id = $this->request->query->get('id', null);

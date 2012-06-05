@@ -7,6 +7,9 @@ widgets using the Admin API calls
     $widget = new Example_Widget_DisplayUsers();
     ModUtil::apiFunc('Dashboard', 'admin', 'registerWidget', array('widget' => $widget));
 
+By using ModUtil::apiFunc() we avoid the need to check if the Dashboard module is
+installed and active.
+
 Similarly they can be removed by
 
     ModUtil::apiFunc('Dashboard', 'admin', 'registerWidget',
@@ -21,6 +24,31 @@ are installed, it is important to implement an event listener for
 `installer.module.installed` which receives `$modinfo` as args
 after a module is successfully installed. This will allow you to
 retroactively register widgets when the Dashboard module is installed.
+
+Example:
+
+    class DashboardInstallListener
+    {
+        /**
+         * On an module remove hook call this listener
+         *
+         * Listens for the 'installer.module.installed' event.
+         *
+         * @param Zikula_Event $event Event.
+         */
+        public static function onInstall(Zikula_Event $event)
+        {
+            if ($event['name'] == 'dashboard') {
+                ModUtil::apiFunc('Dashboard', 'admin', 'registerWidget', array(
+                    'widget' => new Example_Widget_Foo()
+                ));
+
+                ModUtil::apiFunc('Dashboard', 'admin', 'registerWidget', array(
+                    'widget' => new Example_Widget_Foo2()
+                ));
+            }
+        }
+    }
 
 Widgets must implement the `Dashboard_AbstractWidget` class
 
