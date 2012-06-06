@@ -39,6 +39,9 @@ class Dashboard_Util
         $em->flush();
     }
 
+    /**
+     * @param $module
+     */
     public static function unregisterWidgets($module)
     {
         /* @var EntityManager $em */
@@ -62,6 +65,13 @@ class Dashboard_Util
         $em->flush();
     }
 
+    /**
+     * @param integer                  $uid
+     * @param Dashboard_AbstractWidget $widget
+     * @param integer                  $position
+     *
+     * @return mixed
+     */
     public static function addUserWidget($uid, $widget, $position = 0)
     {
         /* @var EntityManager $em */
@@ -86,6 +96,9 @@ class Dashboard_Util
         $em->flush();
     }
 
+    /**
+     * @param integer $id
+     */
     public static function removeUserWidget($id)
     {
         /* @var EntityManager $em */
@@ -100,6 +113,9 @@ class Dashboard_Util
         $em->flush();
     }
 
+    /**
+     * @param integer $uid
+     */
     public static function removeUserWidgets($uid)
     {
         /* @var EntityManager $em */

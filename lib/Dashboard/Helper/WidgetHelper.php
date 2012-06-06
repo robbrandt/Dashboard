@@ -2,6 +2,9 @@
 
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Widget helper class
+ */
 class Dashboard_Helper_WidgetHelper
 {
     /**

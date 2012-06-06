@@ -2,6 +2,11 @@
 
 class Dashboard_Api_Account extends Zikula_AbstractApi
 {
+    /**
+     * @param $args
+     *
+     * @return array
+     */
     public function getAll($args)
     {
         $items = array();

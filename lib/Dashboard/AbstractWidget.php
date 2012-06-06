@@ -230,6 +230,12 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
         return $this->id;
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
     public function offsetGet($key)
     {
         $method = 'get'.ucwords($key);
@@ -244,6 +250,13 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
         throw new InvalidArgumentException(sprintf('method %s nor property %s not found', $method, $key));
     }
 
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @return mixed|void
+     * @throws InvalidArgumentException
+     */
     public function offsetSet($key, $value)
     {
         $method = 'set'.ucwords($key);
@@ -258,11 +271,21 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
         throw new InvalidArgumentException(sprintf('method %s nor property %s not found', $method, $key));
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return mixed|void
+     */
     public function offsetUnset($key)
     {
         return $this->offsetSet($key, null);
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return bool
+     */
     public function offsetExists($key)
     {
         return (bool) $this->offsetGet($key);

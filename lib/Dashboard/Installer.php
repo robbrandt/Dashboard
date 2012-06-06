@@ -2,6 +2,9 @@
 
 class Dashboard_Installer extends Zikula_AbstractInstaller
 {
+    /**
+     * @return bool
+     */
     public function install()
     {
         try {
@@ -28,11 +31,19 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
         return true;
     }
 
+    /**
+     * @param string $oldversion
+     *
+     * @return bool|string
+     */
     public function upgrade($oldversion)
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function uninstall()
     {
         try {
