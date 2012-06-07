@@ -1,3 +1,4 @@
+// Copyright Zikula Foundation 2012 license LGPLv3+
 document.observe('dom:loaded', dashboard_user_dashboard_init);
 
 function dashboard_user_dashboard_init()
