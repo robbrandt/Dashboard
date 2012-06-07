@@ -59,4 +59,3 @@
         </div>
     </form>
 </div>
-<br style="clear: left"/>

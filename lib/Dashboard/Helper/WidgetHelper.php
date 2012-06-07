@@ -44,6 +44,9 @@ class Dashboard_Helper_WidgetHelper
         /* @var Dashboard_Entity_UserWidget $userWidget */
         foreach ($userWidgets as $userWidget) {
             $class = $userWidget->getClass();
+            if (!class_exists($class)) {
+                continue;
+            }
 
             /* @var Dashboard_AbstractWidget $widget */
             $widget = new $class();
@@ -75,6 +78,9 @@ class Dashboard_Helper_WidgetHelper
                 continue; // error
             }
             $class = $dbWidget->getClass();
+            if (!class_exists($class)) {
+                continue;
+            }
 
             /* @var Dashboard_AbstractWidget $widget */
             $widget = new $class();
