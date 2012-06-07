@@ -19,7 +19,10 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
     public function install()
     {
         try {
-            DoctrineHelper::createSchema($this->entityManager, array('Dashboard_Entity_Widget', 'Dashboard_Entity_UserWidget'));
+            DoctrineHelper::createSchema($this->entityManager, array(
+                'Dashboard_Entity_Widget',
+                'Dashboard_Entity_UserWidget',
+            ));
         } catch (Exception $e) {
             return false;
         }
@@ -36,10 +39,6 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
 
         EventUtil::registerPersistentModuleHandler($this->name, 'user.account.delete',
                                                    array('Dashboard_Listener_RemoveUserListener', 'onRemoveUser'));
-
-        // this is just example code for debugging - todo - remove at module release (drak)
-        Dashboard_Util::registerWidget(new Dashboard_Widget_Example());
-        Dashboard_Util::registerWidget(new Dashboard_Widget_Example2());
 
         return true;
     }
@@ -60,7 +59,10 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
     public function uninstall()
     {
         try {
-            DoctrineHelper::dropSchema($this->entityManager, array('Dashboard_Entity_Widget', 'Dashboard_Entity_UserWidget'));
+            DoctrineHelper::dropSchema($this->entityManager, array(
+                'Dashboard_Entity_UserWidget',
+                'Dashboard_Entity_Widget',
+            ));
         } catch (Exception $e) {
             return false;
         }
