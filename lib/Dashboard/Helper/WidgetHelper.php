@@ -37,8 +37,8 @@ class Dashboard_Helper_WidgetHelper
      */
     public function getUserWidgets($uid)
     {
-        $userWidgets = $this->em->getRepository('Dashboard_Entity_UserWidget')
-            ->findBy(array('uid' => $uid));
+        $userWidgets = $this->em->createQuery("SELECT u FROM Dashboard_Entity_UserWidget u WHERE u.uid = $uid ORDER BY u.position")
+            ->execute();
 
         $widgets = array();
         /* @var Dashboard_Entity_UserWidget $userWidget */

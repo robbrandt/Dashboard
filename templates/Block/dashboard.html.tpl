@@ -1,5 +1,5 @@
 {foreach item='userWidget' from=$userWidgets}
-<div class="z-dashboardlink" style="width:{math equation='100/x' x=$modvars.Dashboard.widgetsperrow format='%.0d'}%;">
+<div class="z-dashboardwidgetcontainer" style="width:{math equation='100/x' x=$modvars.Dashboard.widgetsperrow format='%.0d'}%;">
     {*{$userWidget->getPosition()}*}
     {*{$userWidget->getUserWidgetId()}*}
     {if $userWidget->getUrl()}

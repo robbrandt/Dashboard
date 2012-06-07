@@ -1,4 +1,4 @@
-div.z-dashboardlink {
+div.z-dashboardwidgetcontainer {
     text-align: center;
     float: left;
     height: 9em;
@@ -6,4 +6,8 @@ div.z-dashboardlink {
 
 div.z-dashboardlink img {
     border: none;
+}
+
+#z-dashboardwidgetlist .z-dragicon {
+    cursor: move;
 }
