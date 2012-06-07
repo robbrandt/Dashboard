@@ -1,4 +1,5 @@
 {ajaxheader modname="Dashboard" filename="dashboard_user_dashboard.js" noscriptaculous=true effects=true}
+{ajaxheader modname="Dashboard" filename="dragsort.js" noscriptaculous=true effects=true}
 {gt text='Dashboard Widgets' assign='title'}
 {pagesetvar name='title' value=$title}
 {insert name='csrftoken' assign="token"}

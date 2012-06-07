@@ -1,3 +1,4 @@
+{ajaxheader modname="Dashboard" filename="dragsort.js" noscriptaculous=true effects=true}
 <div id="z-dashboardwidgetlist">
     <div id="widgets">
         {foreach item='userWidget' from=$userWidgets}
