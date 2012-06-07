@@ -77,15 +77,6 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
     abstract public function getName();
 
     /**
-     * Gets Preview
-     *
-     * @return string
-     */
-    public function getPreview()
-    {
-    }
-
-    /**
      * Gets Icon name
      *
      * @return string
