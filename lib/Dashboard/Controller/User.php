@@ -18,20 +18,21 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         $widgets = $helper->getRegisteredWidgets($uid);
 
         $this->view->assign('widgets', $widgets);
+        $checkbox = (int) $this->request->getSession()->get('dashboard/available_widget_checkbox', false);
+        $this->view->assign('available_checkbox', $checkbox);
 
         return $this->view->fetch('User/view.html.tpl');
     }
 
     public function addWidget()
     {
-        $this->checkCsrfToken($this->request->query->get('csrftoken', null));
+        $this->checkCsrfToken();
 
         if (!SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ)) {
             return LogUtil::registerPermissionError();
         }
 
-        $position = $this->request->request->get('widget_position', 0);
-        $widgetId = $this->request->query->get('id', null);
+        $widgetId = $this->request->request->get('id', null);
         if (null === $widgetId) {
             throw new Exception($this->__(sprintf('%s not found', $widgetId)));
         }
@@ -51,20 +52,20 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         }
 
         $uid = $this->request->getSession()->get('uid');
-        Dashboard_Util::addUserWidget($uid, $widget, $position);
+        Dashboard_Util::addUserWidget($uid, $widget);
 
         return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
     }
 
     public function removeWidget()
     {
-        $this->checkCsrfToken($this->request->query->get('csrftoken', null));
+        $this->checkCsrfToken();
 
         if (!SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ)) {
             return LogUtil::registerPermissionError();
         }
 
-        $id = $this->request->query->get('id', null);
+        $id = $this->request->request->get('id', null);
         if (null === $id) {
             throw new Exception($this->__('id not specified'));
         }

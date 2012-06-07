@@ -10,16 +10,20 @@
         <fieldset>
             <legend>{gt text="Main info"}</legend>
             <div class="z-formrow">
-                <label for="dashboard_widgetsperrow">{gt text="Widgets per row"}</label>
-                <input id="dashboard_widgetsperrow" type="text" name="settings[widgetsperrow]" value="{$modvars.Dashboard.widgetsperrow|safetext}" size="3" maxlength="3" />
+                <label for="dashboard_widgets_per_row">{gt text="Widgets per row"}</label>
+                <input id="dashboard_widgets_per_row" type="text" name="settings[widgets_per_row]" value="{$modvars.Dashboard.widgets_per_row|safetext}" size="3" maxlength="3" />
             </div>
             <div class="z-formrow">
-                <label for="dashboard_widgetsnewuser">{gt text="Add all available widgets for new users"}</label>
-                <div id="dashboard_widgetsnewuser">
-                    <input id="dashboard_widgetsnewuser_yes" type="radio" name="settings[widgetsnewuser]" value="1" {if $modvars.Dashboard.widgetsnewuser eq 1}checked="checked"{/if} />
-                    <label for="dashboard_widgetsnewuser_yes">{gt text="Yes"}</label>
-                    <input id="dashboard_widgetsnewuser_no" type="radio" name="settings[widgetsnewuser]" value="0" {if $modvars.Dashboard.widgetsnewuser eq 0}checked="checked"{/if} />
-                    <label for="dashboard_widgetsnewuser_no">{gt text="No"}</label>
+                <label for="dashboard_available_widgets_per_row">{gt text="Available widgets icons per row"}</label>
+                <input id="dashboard_available_widgets_per_row" type="text" name="settings[available_per_row]" value="{$modvars.Dashboard.available_per_row|safetext}" size="3" maxlength="3" />
+            </div>
+            <div class="z-formrow">
+                <label for="dashboard_widgets_new_user">{gt text="Add all available widgets automatically for new users"}</label>
+                <div id="dashboard_widgets_new_user">
+                    <input id="dashboard_widgets_new_user_yes" type="radio" name="settings[new_user]" value="1" {if $modvars.Dashboard.new_user eq 1}checked="checked"{/if} />
+                    <label for="dashboard_widgets_new_user_yes">{gt text="Yes"}</label>
+                    <input id="dashboard_widgets_new_user_no" type="radio" name="settings[new_user]" value="0" {if $modvars.Dashboard.new_user eq 0}checked="checked"{/if} />
+                    <label for="dashboard_widgets_new_user_no">{gt text="No"}</label>
                 </div>
             </div>
         </fieldset>

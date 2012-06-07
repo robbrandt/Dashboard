@@ -29,4 +29,15 @@ class Dashboard_Controller_Ajax extends Zikula_Controller_AbstractAjax
 
         return new Zikula_Response_Ajax(array());
     }
+
+    public function setAddState()
+    {
+        $this->checkAjaxToken();
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_EDIT));
+
+        $state = $this->request->request->get('state');
+        $this->request->getSession()->set('dashboard/available_widget_checkbox', $state);
+
+        return new Zikula_Response_Ajax(array());
+    }
 }

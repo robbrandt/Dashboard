@@ -24,8 +24,10 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
             return false;
         }
 
-        $this->setVar('widgetsperrow', 5);
-        $this->setVar('widgetsnewuser', 0);
+        $this->setVar('widgets_per_row', 5);
+        $this->setVar('available_per_row', 5);
+        $this->setVar('new_user', 1);
+
         EventUtil::registerPersistentModuleHandler($this->name, 'installer.module.uninstalled',
                                                    array('Dashboard_Listener_UninstallListener', 'onUninstallModule'));
 
