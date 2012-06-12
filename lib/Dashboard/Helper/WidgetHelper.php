@@ -77,7 +77,9 @@ class Dashboard_Helper_WidgetHelper
             if (!SecurityUtil::checkPermission('Dashboard::', "{$dbWidget->getId()}:{$dbWidget->getModule()}:$uid", ACCESS_READ)) {
                 continue; // error
             }
-            $class = $dbWidget->getClass();
+
+            $event = new Zikula_Event(new Zikula_Event(Dashboard_Events::FILTER_WIDGET_CLASS, null, array(), $dbWidget->getClass()));
+            $class = EventUtil::notify($event)->getData();
             if (!class_exists($class)) {
                 continue;
             }
